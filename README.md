@@ -1,36 +1,65 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# PropMatch AI — Real Estate Lead Qualification Bot
 
-## Getting Started
+An AI-powered property qualification bot built for Aiaura Solutions hiring task.
 
-First, run the development server:
+## Tech Stack
+- **Frontend & Backend**: Next.js 14 (App Router)
+- **Database**: Supabase (PostgreSQL)
+- **AI**: OpenAI GPT-4o-mini
+- **Deployment**: Vercel
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+---
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Database Schema
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+### properties
+| Column | Type | Description |
+|--------|------|-------------|
+| id | UUID | Primary key |
+| title | TEXT | Property title |
+| price | NUMERIC | Price in PKR |
+| location | TEXT | Area/city |
+| bedrooms | INTEGER | Number of bedrooms |
+| type | TEXT | 'buy' or 'rent' |
+| description | TEXT | Property details |
+| area_sqft | INTEGER | Size in sqft |
+| amenities | TEXT[] | List of amenities |
+| created_at | TIMESTAMP | Auto-set |
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### leads
+| Column | Type | Description |
+|--------|------|-------------|
+| id | UUID | Primary key |
+| name | TEXT | Lead's name |
+| email | TEXT | Email address |
+| phone | TEXT | Phone number |
+| budget | NUMERIC | Budget in PKR |
+| location_preference | TEXT | Preferred area |
+| bedrooms | INTEGER | Required bedrooms |
+| deal_type | TEXT | 'buy' or 'rent' |
+| timeline | TEXT | Purchase timeline |
+| classification | TEXT | Hot/Warm/Cold |
+| created_at | TIMESTAMP | Auto-set |
+| updated_at | TIMESTAMP | Auto-updated |
 
-## Learn More
+### conversations
+| Column | Type | Description |
+|--------|------|-------------|
+| id | UUID | Primary key |
+| lead_id | UUID | Foreign key → leads |
+| role | TEXT | 'user' or 'assistant' |
+| content | TEXT | Message content |
+| created_at | TIMESTAMP | Auto-set |
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Assumptions
+- Properties are based in Pakistan (PKR pricing)
+- Lead classification logic: Hot = ready now + realistic budget, Warm = 3-6 months, Cold = browsing
+- No auth required for dashboard (internal sales tool)
+- GPT-4o-mini used for cost efficiency
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Known Limitations
+- No user authentication on dashboard
+- Property images are placeholder (no image uploads)
+- Email notifications are visual-only (no real email sending)

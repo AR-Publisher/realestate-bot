@@ -1,65 +1,96 @@
-import Image from "next/image";
+'use client'
+import Link from 'next/link'
+import { useState, useEffect } from 'react'
 
 export default function Home() {
+  const [loaded, setLoaded] = useState(false)
+
+  useEffect(() => {
+    setTimeout(() => setLoaded(true), 100)
+  }, [])
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.js file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    <main className="min-h-screen bg-[#0A0A0F] relative overflow-hidden flex flex-col">
+      {/* Background gradient orbs */}
+      <div className="fixed inset-0 pointer-events-none">
+        <div className="absolute top-[-20%] left-[-10%] w-[600px] h-[600px] rounded-full"
+          style={{ background: 'radial-gradient(circle, rgba(201,168,76,0.06) 0%, transparent 70%)' }} />
+        <div className="absolute bottom-[-20%] right-[-10%] w-[500px] h-[500px] rounded-full"
+          style={{ background: 'radial-gradient(circle, rgba(76,168,232,0.05) 0%, transparent 70%)' }} />
+      </div>
+
+      {/* Nav */}
+      <nav className="relative z-10 flex items-center justify-between px-8 py-6">
+        <div className="flex items-center gap-3">
+          <div className="w-8 h-8 rounded-lg flex items-center justify-center"
+            style={{ background: 'linear-gradient(135deg, #C9A84C, #9C7A35)' }}>
+            <span className="text-black font-bold text-sm">P</span>
+          </div>
+          <span style={{ fontFamily: 'var(--font-display)', color: '#C9A84C', fontSize: '1.1rem', fontWeight: 600 }}>
+            PropMatch AI
+          </span>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+        <Link href="/dashboard"
+          className="text-sm px-4 py-2 rounded-lg transition-all"
+          style={{ color: '#A8A4A0', border: '1px solid #2E2E3E' }}
+          onMouseEnter={e => { e.target.style.color = '#C9A84C'; e.target.style.borderColor = '#C9A84C' }}
+          onMouseLeave={e => { e.target.style.color = '#A8A4A0'; e.target.style.borderColor = '#2E2E3E' }}>
+          CRM Dashboard →
+        </Link>
+      </nav>
+
+      {/* Hero */}
+      <div className="relative z-10 flex flex-col items-center justify-center flex-1 px-6 text-center"
+        style={{ opacity: loaded ? 1 : 0, transform: loaded ? 'translateY(0)' : 'translateY(20px)', transition: 'all 0.6s ease' }}>
+
+        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full mb-8 text-xs font-medium tracking-widest uppercase"
+          style={{ background: 'rgba(201,168,76,0.1)', border: '1px solid rgba(201,168,76,0.2)', color: '#C9A84C' }}>
+          <span className="w-1.5 h-1.5 rounded-full bg-[#C9A84C] animate-pulse" />
+          AI Property Consultant · Available 24/7
         </div>
-      </main>
-    </div>
-  );
+
+        <h1 style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(2.5rem, 6vw, 4.5rem)', fontWeight: 700, lineHeight: 1.1, marginBottom: '1.5rem' }}>
+          Find Your Perfect<br />
+          <span style={{ background: 'linear-gradient(135deg, #C9A84C, #E8C96A)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
+            Property Match
+          </span>
+        </h1>
+
+        <p style={{ color: '#A8A4A0', fontSize: '1.1rem', maxWidth: '480px', lineHeight: 1.7, marginBottom: '3rem' }}>
+          Chat with our AI consultant to discover properties tailored to your budget, location, and lifestyle — and get matched in minutes.
+        </p>
+
+        <div className="flex flex-col sm:flex-row gap-4 items-center">
+          <Link href="/chat"
+            className="group relative px-8 py-4 rounded-xl font-medium text-black transition-all duration-300"
+            style={{ background: 'linear-gradient(135deg, #C9A84C, #E8C96A)', fontSize: '1rem' }}>
+            <span className="relative z-10">Start Property Search</span>
+            <div className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity"
+              style={{ background: 'linear-gradient(135deg, #E8C96A, #C9A84C)' }} />
+          </Link>
+          <Link href="/dashboard"
+            className="px-8 py-4 rounded-xl font-medium transition-all duration-300"
+            style={{ color: '#F0EDE8', border: '1px solid #2E2E3E', fontSize: '1rem' }}
+            onMouseEnter={e => e.currentTarget.style.borderColor = '#C9A84C'}
+            onMouseLeave={e => e.currentTarget.style.borderColor = '#2E2E3E'}>
+            View CRM Dashboard
+          </Link>
+        </div>
+
+        {/* Stats */}
+        <div className="grid grid-cols-3 gap-8 mt-20 pt-12" style={{ borderTop: '1px solid #1A1A24' }}>
+          {[
+            { value: '15+', label: 'Properties Listed' },
+            { value: 'AI', label: 'Powered Matching' },
+            { value: '3', label: 'Lead Classifications' },
+          ].map((stat, i) => (
+            <div key={i} className="text-center">
+              <div style={{ fontFamily: 'var(--font-display)', fontSize: '2rem', color: '#C9A84C', fontWeight: 700 }}>{stat.value}</div>
+              <div style={{ color: '#6B6870', fontSize: '0.8rem', marginTop: '4px' }}>{stat.label}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </main>
+  )
 }
